@@ -30,6 +30,11 @@ func fromJson(input []byte) *Dictionary {
 }
 
 func Save(filename string) {
+	if filename == "" {
+		fmt.Printf("No file specified")
+		return
+	}
+
 	var file *os.File
 	data, err := toJson(Store)
 	ErrorHandler(err)
@@ -51,6 +56,11 @@ func Save(filename string) {
 }
 
 func Load(filename string) {
+	if filename == "" {
+		fmt.Printf("No file specified")
+		return
+	}
+
 	stream, err := ioutil.ReadFile(filename)
 	ErrorHandler(err)
 
