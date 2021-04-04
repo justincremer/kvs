@@ -1,16 +1,16 @@
 {
     "people": [
-        "1": {
+        {
             "name": "justin",
             "age": "23",
             "profession": "programmer"
         },
-        "2": {
+        {
             "name": "sophie",
             "age": "23",
             "profession": "gamer"
         },
-        "3": {
+        {
             "name": "harry",
             "age": "600",
             "profession": "god cat"

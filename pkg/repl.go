@@ -19,9 +19,24 @@ GET        Returns a key value from either the current transaction or global sto
 SET        Sets a key value in the current transaction
 DELETE     Deletes a key value from either the current transaction or global store
 COUNT      Returns the stack size of the current transaction if there is one
-           If there isn't one, it will return the stack size of the global store			
+           If there isn't one, it will return the stack size of the global store
+SAVE       Saves the global store to a specified file (be care, this writes over things in your fs)
+LOAD       Loads and unmarshalls into the global store from a specified file
 HELP       If you're using this program, you know what this does
 QUIT       Exit 0`
+
+// func checkArgs(buffer []string, expected int) {
+// 	length := len(buffer)
+
+// 	if length < expected {
+// 		kernel.ErrorHandler(errors.New("too few arguments"))
+// 		return
+// 	}
+// 	if length > expected {
+// 		kernel.ErrorHandler(errors.New("too many arguments"))
+// 		return
+// 	}
+// }
 
 func InitializeRepl() {
 	reader := bufio.NewReader(os.Stdin)
@@ -50,9 +65,9 @@ func InitializeRepl() {
 		case "COUNT":
 			kernel.Count(operation[1], items)
 		case "SAVE":
-			kernel.Save("daddy.db")
+			kernel.Save(operation[1])
 		case "LOAD":
-			kernel.Load("daddy.db")
+			kernel.Load(operation[1])
 		case "QUIT":
 			os.Exit(0)
 		case "HELP":
