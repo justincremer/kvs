@@ -5,10 +5,17 @@ import (
 	"fmt"
 	"io/fs"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
 const filePerms uint32 = 0777
+
+func ErrorHandler(e error) {
+	if e != nil {
+		log.Fatal(e)
+	}
+}
 
 func toJson(input Dictionary) ([]byte, error) {
 	return json.Marshal(&input)
