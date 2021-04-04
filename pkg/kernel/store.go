@@ -2,7 +2,17 @@ package kernel
 
 import "fmt"
 
-var Store = make(Dictionary)
+type Dictionary map[string]interface{}
+
+type Transaction struct {
+	store Dictionary
+	next  *Transaction
+}
+
+type Stack struct {
+	top  *Transaction
+	size int
+}
 
 type ITransaction interface {
 	Push()
@@ -16,17 +26,7 @@ type ITransaction interface {
 	Count(v string, s *Stack)
 }
 
-type Dictionary map[string]string
-
-type Transaction struct {
-	store Dictionary
-	next  *Transaction
-}
-
-type Stack struct {
-	top  *Transaction
-	size int
-}
+var Store = make(Dictionary)
 
 func (stack *Stack) Push() {
 	temp := Transaction{store: make(Dictionary)}
