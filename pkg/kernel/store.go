@@ -43,7 +43,6 @@ func (stack *Stack) Pop() {
 		stack.size--
 		return
 	}
-
 	fmt.Printf("Error: No active transaction\n")
 }
 
@@ -72,7 +71,6 @@ func (stack *Stack) Rollback() {
 		}
 		return
 	}
-
 	fmt.Printf("Error: No active transaction\n")
 }
 
@@ -82,16 +80,13 @@ func Get(key string, stack *Stack) {
 			fmt.Printf("%s\n", val)
 			return
 		}
-
 		fmt.Printf("Error: %s not set\n", key)
 		return
 	}
-
 	if val, ok := Store[key]; ok {
 		fmt.Printf("%s\n", val)
 		return
 	}
-
 	fmt.Printf("Error: %s not set\n", key)
 }
 
@@ -100,7 +95,6 @@ func Set(key string, val string, stack *Stack) {
 		currTransaction.store[key] = val
 		return
 	}
-
 	Store[key] = val
 }
 
@@ -110,7 +104,6 @@ func Delete(key string, stack *Stack) {
 		fmt.Printf("%s deleted\n", key)
 		return
 	}
-
 	delete(Store, key)
 	fmt.Printf("%s deleted\n", key)
 }
@@ -126,7 +119,6 @@ func Count(val string, stack *Stack) {
 		fmt.Printf("%d\n", count)
 		return
 	}
-
 	for _, value := range Store {
 		if val == value {
 			count++

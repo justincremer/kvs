@@ -9,7 +9,9 @@ import (
 	"os"
 )
 
-const filePerms uint32 = 0777
+const (
+	filePerms uint32 = 0777
+)
 
 func ErrorHandler(e error) {
 	if e != nil {
@@ -17,15 +19,14 @@ func ErrorHandler(e error) {
 	}
 }
 
-func toJson(input Dictionary) ([]byte, error) {
+func serialize(input Dictionary) ([]byte, error) {
 	return json.Marshal(&input)
 }
 
-func fromJson(input []byte) *Dictionary {
+func deserialize(input []byte) *Dictionary {
 	temp := Dictionary{}
 	err := json.Unmarshal(input, &temp)
 	ErrorHandler(err)
-
 	return &temp
 }
 
@@ -34,11 +35,9 @@ func Save(filename string) {
 		fmt.Printf("No file specified")
 		return
 	}
-
 	var file *os.File
-	data, err := toJson(Store)
+	data, err := serialize(Store)
 	ErrorHandler(err)
-
 	if _, err := os.Stat(filename); err != nil {
 		file, err = os.Create(filename)
 		ErrorHandler(err)
@@ -46,25 +45,16 @@ func Save(filename string) {
 		file, err = os.OpenFile(filename, os.O_RDWR, fs.FileMode(filePerms))
 		ErrorHandler(err)
 	}
-
 	defer file.Close()
-
 	count, err := file.Write(data)
 	ErrorHandler(err)
-
 	fmt.Printf("Successfully wrote %d bytes to %s\n", count, filename)
 }
 
 func Load(filename string) {
-	if filename == "" {
-		fmt.Printf("No file specified")
-		return
-	}
-
 	stream, err := ioutil.ReadFile(filename)
 	ErrorHandler(err)
-
-	content := fromJson(stream)
+	content := deserialize(stream)
 	Store = *content
 	fmt.Printf("Successful read from %s\n", filename)
 }
